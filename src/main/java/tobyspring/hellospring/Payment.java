@@ -3,7 +3,6 @@ package tobyspring.hellospring;
 import tobyspring.hellospring.vo.PaymentDecimal;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Payment {
@@ -19,9 +18,9 @@ public class Payment {
                    LocalDateTime validUntil) {
         this.orderId = orderId;
         this.currency = currency;
-        this.foriegnCurAmount = paymentDecimal.getForiegnCurAmount();
-        this.exRate = paymentDecimal.getExRate();
-        this.convertedAmount = paymentDecimal.getConvertedAmount();
+        this.foriegnCurAmount = paymentDecimal.foriegnCurAmount();
+        this.exRate = paymentDecimal.exRate();
+        this.convertedAmount = paymentDecimal.convertedAmount();
         this.validUntil = validUntil;
     }
 
