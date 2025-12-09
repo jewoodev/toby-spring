@@ -1,8 +1,9 @@
 package tobyspring.hellospring;
 
+import tobyspring.hellospring.vo.ExRate;
+
 import java.io.IOException;
-import java.math.BigDecimal;
 
 public interface ExRateProvider {
-    BigDecimal getExRate(String currency) throws IOException;
+    ExRate getExRate(String currency) throws IOException;
 }

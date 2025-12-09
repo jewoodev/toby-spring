@@ -1,6 +1,6 @@
 package tobyspring.hellospring;
 
-import org.springframework.stereotype.Component;
+import tobyspring.hellospring.vo.ExRate;
 import tobyspring.hellospring.vo.PaymentDecimal;
 
 import java.io.IOException;
@@ -15,13 +15,13 @@ public class PaymentService {
     }
 
     public Payment prepare(Long orderId, String currency, BigDecimal foriegnCurrencyAmount) throws IOException {
-        BigDecimal krwRate = exRateProvider.getExRate(currency);
-        BigDecimal convertedAmount = foriegnCurrencyAmount.multiply(krwRate);
-        LocalDateTime validUntil = LocalDateTime.now().plusMinutes(30);
+        ExRate exRate = exRateProvider.getExRate(currency);
+        BigDecimal convertedAmount = foriegnCurrencyAmount.multiply(exRate.value());
+        LocalDateTime validUntil = exRate.nextUpdateAt().minusSeconds(1);
 
         var paymentDecimal = PaymentDecimal.builder()
                 .foriegnCurAmount(foriegnCurrencyAmount)
-                .exRate(krwRate)
+                .exRate(exRate.value())
                 .convertedAmount(convertedAmount)
                 .build();
 
