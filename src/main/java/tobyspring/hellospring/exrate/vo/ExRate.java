@@ -1,4 +1,4 @@
-package tobyspring.hellospring.vo;
+package tobyspring.hellospring.exrate.vo;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

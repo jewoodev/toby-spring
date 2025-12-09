@@ -1,6 +1,6 @@
-package tobyspring.hellospring;
+package tobyspring.hellospring.payment;
 
-import tobyspring.hellospring.vo.ExRate;
+import tobyspring.hellospring.exrate.vo.ExRate;
 
 import java.io.IOException;
 

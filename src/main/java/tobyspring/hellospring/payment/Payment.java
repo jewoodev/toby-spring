@@ -1,6 +1,6 @@
-package tobyspring.hellospring;
+package tobyspring.hellospring.payment;
 
-import tobyspring.hellospring.vo.PaymentDecimal;
+import tobyspring.hellospring.payment.vo.PaymentDecimal;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Payment {
     private Long orderId;
     private String currency;
-    private BigDecimal foriegnCurAmount;
+    private BigDecimal foreignCurrencyAmount;
     private BigDecimal exRate;
     private BigDecimal convertedAmount;
     private LocalDateTime validUntil;
@@ -18,7 +18,7 @@ public class Payment {
                    LocalDateTime validUntil) {
         this.orderId = orderId;
         this.currency = currency;
-        this.foriegnCurAmount = paymentDecimal.foriegnCurAmount();
+        this.foreignCurrencyAmount = paymentDecimal.foreignCurAmount();
         this.exRate = paymentDecimal.exRate();
         this.convertedAmount = paymentDecimal.convertedAmount();
         this.validUntil = validUntil;
@@ -32,8 +32,8 @@ public class Payment {
         return currency;
     }
 
-    public BigDecimal getForiegnCurAmount() {
-        return foriegnCurAmount;
+    public BigDecimal getForeignCurrencyAmount() {
+        return foreignCurrencyAmount;
     }
 
     public BigDecimal getExRate() {
@@ -53,7 +53,7 @@ public class Payment {
         return "Payment{" +
                 "orderId=" + orderId +
                 ", currency='" + currency + '\'' +
-                ", foriegnCurAmount=" + foriegnCurAmount +
+                ", foreignCurrencyAmount=" + foreignCurrencyAmount +
                 ", exRate=" + exRate +
                 ", convertedAmount=" + convertedAmount +
                 ", validUntil=" + validUntil +

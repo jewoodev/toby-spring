@@ -1,6 +1,7 @@
-package tobyspring.hellospring;
+package tobyspring.hellospring.exrate;
 
-import tobyspring.hellospring.vo.ExRate;
+import tobyspring.hellospring.exrate.vo.ExRate;
+import tobyspring.hellospring.payment.ExRateProvider;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

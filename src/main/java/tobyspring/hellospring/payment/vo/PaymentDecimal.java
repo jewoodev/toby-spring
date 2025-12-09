@@ -1,4 +1,4 @@
-package tobyspring.hellospring.vo;
+package tobyspring.hellospring.payment.vo;
 
 import lombok.Builder;
 
@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 @Builder
 public record PaymentDecimal(
-        BigDecimal foriegnCurAmount,
+        BigDecimal foreignCurAmount,
         BigDecimal exRate,
         BigDecimal convertedAmount
 ) {

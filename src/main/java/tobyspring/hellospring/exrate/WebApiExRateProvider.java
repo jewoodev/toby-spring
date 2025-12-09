@@ -1,8 +1,9 @@
-package tobyspring.hellospring;
+package tobyspring.hellospring.exrate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import tobyspring.hellospring.dto.ExRateData;
-import tobyspring.hellospring.vo.ExRate;
+import tobyspring.hellospring.exrate.vo.ExRate;
+import tobyspring.hellospring.payment.ExRateProvider;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,11 +28,9 @@ public class WebApiExRateProvider implements ExRateProvider {
         var om = new ObjectMapper();
         var exRateData = om.readValue(response, ExRateData.class);
         BigDecimal krwRate = exRateData.rates().get("KRW");
-//        Instant nextUpdate = Instant.ofEpochSecond(exRateData.time_next_update_unix());
-//        LocalDateTime nextUpdateAt = LocalDateTime.ofInstant(nextUpdate, ZoneId.of("Asia/Seoul"));
-        LocalDateTime nextUpdateAt = LocalDateTime.now().plusSeconds(4);
+        Instant nextUpdate = Instant.ofEpochSecond(exRateData.time_next_update_unix());
+        LocalDateTime nextUpdateAt = LocalDateTime.ofInstant(nextUpdate, ZoneId.of("Asia/Seoul"));
 
-        System.out.println("API ExRate: " + krwRate);
         return new ExRate(krwRate, nextUpdateAt);
     }
 }

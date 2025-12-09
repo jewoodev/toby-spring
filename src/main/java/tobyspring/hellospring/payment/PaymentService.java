@@ -1,7 +1,7 @@
-package tobyspring.hellospring;
+package tobyspring.hellospring.payment;
 
-import tobyspring.hellospring.vo.ExRate;
-import tobyspring.hellospring.vo.PaymentDecimal;
+import tobyspring.hellospring.exrate.vo.ExRate;
+import tobyspring.hellospring.payment.vo.PaymentDecimal;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -14,13 +14,13 @@ public class PaymentService {
         this.exRateProvider = exRateProvider;
     }
 
-    public Payment prepare(Long orderId, String currency, BigDecimal foriegnCurrencyAmount) throws IOException {
+    public Payment prepare(Long orderId, String currency, BigDecimal foreignCurrencyAmount) throws IOException {
         ExRate exRate = exRateProvider.getExRate(currency);
-        BigDecimal convertedAmount = foriegnCurrencyAmount.multiply(exRate.value());
+        BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate.value());
         LocalDateTime validUntil = exRate.nextUpdateAt().minusSeconds(1);
 
         var paymentDecimal = PaymentDecimal.builder()
-                .foriegnCurAmount(foriegnCurrencyAmount)
+                .foreignCurAmount(foreignCurrencyAmount)
                 .exRate(exRate.value())
                 .convertedAmount(convertedAmount)
                 .build();
