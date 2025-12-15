@@ -1,14 +1,12 @@
-package tobyspring.hellospring.payment.stub;
+package tobyspring.hellospring.exrate.stub;
 
 import tobyspring.hellospring.exrate.vo.ExRate;
 import tobyspring.hellospring.payment.ExRateProvider;
 
-import java.io.IOException;
-
-public class ExRateProviderStub implements ExRateProvider {
+public class SimpleExRateProviderStub implements ExRateProvider {
     private ExRate exRate;
 
-    public ExRateProviderStub(ExRate exRate) {
+    public SimpleExRateProviderStub(ExRate exRate) {
         this.exRate = exRate;
     }
 
@@ -21,7 +19,7 @@ public class ExRateProviderStub implements ExRateProvider {
     }
 
     @Override
-    public ExRate getExRate(String currency) throws IOException {
+    public ExRate getExRate(String currency) {
         return exRate;
     }
 }

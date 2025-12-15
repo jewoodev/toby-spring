@@ -1,0 +1,24 @@
+package tobyspring.hellospring.exrate.stub;
+
+import tobyspring.hellospring.exrate.vo.ExRate;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+public class CachedExRateProviderStub {
+    private ExRate cache;
+
+    public CachedExRateProviderStub(LocalDateTime nextUpdateAt) {
+        this.cache = new ExRate(BigDecimal.valueOf(1500), nextUpdateAt);
+    }
+
+    public boolean getExRate(String currency) {
+        if (cache.isValid()) return true;
+
+        return false;
+    }
+
+    public void setExRate(ExRate exRate) {
+        this.cache = exRate;
+    }
+}

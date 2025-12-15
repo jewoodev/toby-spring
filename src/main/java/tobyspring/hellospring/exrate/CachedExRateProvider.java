@@ -4,7 +4,6 @@ import tobyspring.hellospring.exrate.vo.ExRate;
 import tobyspring.hellospring.payment.ExRateProvider;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 public class CachedExRateProvider implements ExRateProvider {
     private final ExRateProvider exRateProvider;
@@ -16,7 +15,7 @@ public class CachedExRateProvider implements ExRateProvider {
 
     @Override
     public ExRate getExRate(String currency) throws IOException {
-        if (cache != null && cache.nextUpdateAt().isAfter(LocalDateTime.now())) {
+        if (cache.isValid()) {
             System.out.println("Cache is used.");
             return cache;
         }

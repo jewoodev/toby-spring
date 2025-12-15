@@ -3,7 +3,7 @@ package tobyspring.hellospring.payment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tobyspring.hellospring.exrate.vo.ExRate;
-import tobyspring.hellospring.payment.stub.ExRateProviderStub;
+import tobyspring.hellospring.exrate.stub.SimpleExRateProviderStub;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -33,7 +33,7 @@ class PaymentServiceTest {
 
     private void checkPayment(ExRate exRate, BigDecimal convertedAmount) throws IOException {
         var paymentService = new PaymentService(
-                new ExRateProviderStub(exRate), this.clock
+                new SimpleExRateProviderStub(exRate), this.clock
         );
 
         Payment payment = paymentService.prepare(1000L, "USD", BigDecimal.TEN);
@@ -53,7 +53,7 @@ class PaymentServiceTest {
         LocalDateTime validUntil = LocalDateTime.now(this.clock).plusDays(1);
         ExRate exRate = new ExRate(BigDecimal.valueOf(1500), validUntil);
         var paymentService = new PaymentService(
-                new ExRateProviderStub(exRate), this.clock
+                new SimpleExRateProviderStub(exRate), this.clock
         );
 
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);

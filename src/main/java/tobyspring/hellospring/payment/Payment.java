@@ -1,7 +1,9 @@
 package tobyspring.hellospring.payment;
 
+import tobyspring.hellospring.exrate.vo.ExRate;
 import tobyspring.hellospring.payment.vo.PaymentDecimal;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -13,7 +15,7 @@ public class Payment {
     private BigDecimal convertedAmount;
     private LocalDateTime validUntil;
 
-    public Payment(Long orderId, String currency,
+    private Payment(Long orderId, String currency,
                    PaymentDecimal paymentDecimal,
                    LocalDateTime validUntil) {
         this.orderId = orderId;
@@ -22,6 +24,25 @@ public class Payment {
         this.exRate = paymentDecimal.exRate();
         this.convertedAmount = paymentDecimal.convertedAmount();
         this.validUntil = validUntil;
+    }
+
+    public static Payment createPrepared(Long orderId, String currency, BigDecimal foreignCurrencyAmount,
+                                         ExRateProvider exRateProvider) throws IOException {
+        ExRate exRate = exRateProvider.getExRate(currency);
+        BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate.value());
+        LocalDateTime validUntil = exRate.nextUpdateAt().minusSeconds(1);
+
+        var paymentDecimal = PaymentDecimal.builder()
+                .foreignCurAmount(foreignCurrencyAmount)
+                .exRate(exRate.value())
+                .convertedAmount(convertedAmount)
+                .build();
+
+        return new Payment(orderId, currency, paymentDecimal, validUntil);
+    }
+
+    public boolean isValid() {
+        return this.validUntil.isAfter(LocalDateTime.now());
     }
 
     public Long getOrderId() {
