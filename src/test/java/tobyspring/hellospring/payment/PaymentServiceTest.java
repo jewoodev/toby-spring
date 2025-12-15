@@ -1,31 +1,39 @@
 package tobyspring.hellospring.payment;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tobyspring.hellospring.exrate.vo.ExRate;
 import tobyspring.hellospring.payment.stub.ExRateProviderStub;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.*;
 
 import static org.assertj.core.api.Assertions.*;
 
 class PaymentServiceTest {
+    private Clock clock;
+
+    @BeforeEach
+    void setUp() {
+        this.clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
+    }
+
     @Test
     void checkPayments() throws IOException {
-        LocalDateTime now = LocalDateTime.now();
-        ExRate exRate1 = new ExRate(BigDecimal.valueOf(1500), now.plusDays(1));
-        ExRate exRate2 = new ExRate(BigDecimal.valueOf(1000), now.plusDays(1));
-        ExRate exRate3 = new ExRate(BigDecimal.valueOf(3000), now.plusDays(1));
+        LocalDateTime validUntil = LocalDateTime.now(this.clock).plusDays(1);
+        ExRate exRate1 = new ExRate(BigDecimal.valueOf(1500), validUntil);
+        ExRate exRate2 = new ExRate(BigDecimal.valueOf(1000), validUntil);
+        ExRate exRate3 = new ExRate(BigDecimal.valueOf(3000), validUntil);
 
         checkPayment(exRate1, BigDecimal.valueOf(15_000));
         checkPayment(exRate2, BigDecimal.valueOf(10_000));
         checkPayment(exRate3, BigDecimal.valueOf(30_000));
     }
 
-    private static void checkPayment(ExRate exRate, BigDecimal convertedAmount) throws IOException {
+    private void checkPayment(ExRate exRate, BigDecimal convertedAmount) throws IOException {
         var paymentService = new PaymentService(
-                new ExRateProviderStub(exRate)
+                new ExRateProviderStub(exRate), this.clock
         );
 
         Payment payment = paymentService.prepare(1000L, "USD", BigDecimal.TEN);
@@ -38,5 +46,20 @@ class PaymentServiceTest {
 
         // 환율 유효기간 검증
         assertThat(payment.getValidUntil()).isEqualTo(exRate.nextUpdateAt().minusSeconds(1));
+    }
+
+    @Test
+    void validUntil() throws IOException {
+        LocalDateTime validUntil = LocalDateTime.now(this.clock).plusDays(1);
+        ExRate exRate = new ExRate(BigDecimal.valueOf(1500), validUntil);
+        var paymentService = new PaymentService(
+                new ExRateProviderStub(exRate), this.clock
+        );
+
+        Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
+
+        LocalDateTime expected = LocalDateTime.now(this.clock).plusDays(1).minusSeconds(1);
+
+        assertThat(payment.getValidUntil()).isEqualTo(expected);
     }
 }

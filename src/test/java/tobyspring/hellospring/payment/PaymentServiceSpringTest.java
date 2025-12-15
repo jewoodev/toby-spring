@@ -5,18 +5,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import tobyspring.hellospring.TestObjectFactory;
+import tobyspring.hellospring.TestPaymentConfig;
 import tobyspring.hellospring.exrate.vo.ExRate;
 import tobyspring.hellospring.payment.stub.ExRateProviderStub;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Clock;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {TestObjectFactory.class})
+@ContextConfiguration(classes = {TestPaymentConfig.class})
 class PaymentServiceSpringTest {
 
     @Autowired
@@ -24,6 +25,9 @@ class PaymentServiceSpringTest {
 
     @Autowired
     private ExRateProviderStub exRateProvider;
+
+    @Autowired
+    private Clock clock;
 
     @Test
     void checkPayments() throws IOException {
@@ -53,5 +57,20 @@ class PaymentServiceSpringTest {
 
         // 환율 유효기간 검증
         assertThat(payment.getValidUntil()).isEqualTo(exRate.nextUpdateAt().minusSeconds(1));
+    }
+
+    @Test
+    void validUntil() throws IOException {
+        LocalDateTime validUntil = LocalDateTime.now(this.clock).plusDays(1);
+        ExRate exRate = new ExRate(BigDecimal.valueOf(1500), validUntil);
+        var paymentService = new PaymentService(
+                new ExRateProviderStub(exRate), this.clock
+        );
+
+        Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
+
+        LocalDateTime expected = LocalDateTime.now(this.clock).plusDays(1).minusSeconds(1);
+
+        assertThat(payment.getValidUntil()).isEqualTo(expected);
     }
 }
