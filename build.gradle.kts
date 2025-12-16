@@ -1,6 +1,6 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.1.4"
+	id("org.springframework.boot") version "3.2.2"
 	id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -10,7 +10,7 @@ description = "Demo project for Spring Boot"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
