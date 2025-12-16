@@ -2,10 +2,10 @@ package tobyspring.hellospring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tobyspring.hellospring.exrate.CachedExRateProvider;
-import tobyspring.hellospring.payment.ExRateProvider;
-import tobyspring.hellospring.exrate.WebApiExRateProvider;
-import tobyspring.hellospring.payment.PaymentService;
+import tobyspring.hellospring.adapter.exrate.CachedExRateProvider;
+import tobyspring.hellospring.domain.payment.ExRateProvider;
+import tobyspring.hellospring.adapter.exrate.WebApiExRateProvider;
+import tobyspring.hellospring.application.PaymentService;
 
 import java.time.Clock;
 import java.time.Instant;

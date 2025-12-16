@@ -1,6 +1,6 @@
-package tobyspring.hellospring.exrate.stub;
+package tobyspring.hellospring.adapter.exrate.stub;
 
-import tobyspring.hellospring.exrate.vo.ExRate;
+import tobyspring.hellospring.adapter.exrate.vo.ExRate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

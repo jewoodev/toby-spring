@@ -1,4 +1,4 @@
-package tobyspring.hellospring.exrate;
+package tobyspring.hellospring.adapter.exrate;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tobyspring.hellospring.TestPaymentConfig;
-import tobyspring.hellospring.exrate.stub.CachedExRateProviderStub;
-import tobyspring.hellospring.exrate.vo.ExRate;
+import tobyspring.hellospring.adapter.exrate.stub.CachedExRateProviderStub;
+import tobyspring.hellospring.adapter.exrate.vo.ExRate;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.LocalDateTime;

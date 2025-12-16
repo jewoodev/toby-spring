@@ -1,7 +1,7 @@
-package tobyspring.hellospring.exrate;
+package tobyspring.hellospring.adapter.exrate;
 
-import tobyspring.hellospring.exrate.vo.ExRate;
-import tobyspring.hellospring.payment.ExRateProvider;
+import tobyspring.hellospring.adapter.exrate.vo.ExRate;
+import tobyspring.hellospring.domain.payment.ExRateProvider;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

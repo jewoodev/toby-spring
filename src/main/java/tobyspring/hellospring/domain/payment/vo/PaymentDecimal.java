@@ -1,4 +1,4 @@
-package tobyspring.hellospring.payment.vo;
+package tobyspring.hellospring.domain.payment.vo;
 
 import lombok.Builder;
 
