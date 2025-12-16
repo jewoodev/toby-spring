@@ -25,7 +25,7 @@ class PaymentTest {
     private SimpleExRateProviderStub exRateProvider;
 
     @Test
-    void createPrepared() throws IOException {
+    void createPrepared() {
         exRateProvider.setExRate(new ExRate(BigDecimal.TEN, LocalDateTime.now(clock)));
         var payment = Payment.createPrepared(1L, "USD", BigDecimal.TEN, exRateProvider);
 
@@ -36,7 +36,7 @@ class PaymentTest {
     }
 
     @Test
-    void isValid() throws IOException {
+    void isValid() {
         exRateProvider.setExRate(new ExRate(BigDecimal.TEN, LocalDateTime.now(clock).plusDays(1)));
         var payment = Payment.createPrepared(1L, "USD", BigDecimal.TEN, exRateProvider);
 
@@ -44,7 +44,7 @@ class PaymentTest {
     }
 
     @Test
-    void notValid() throws IOException {
+    void notValid() {
         exRateProvider.setExRate(new ExRate(BigDecimal.TEN, LocalDateTime.now(clock).minusDays(1)));
         var payment = Payment.createPrepared(1L, "USD", BigDecimal.TEN, exRateProvider);
 

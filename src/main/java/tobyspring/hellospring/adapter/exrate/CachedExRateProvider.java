@@ -3,8 +3,6 @@ package tobyspring.hellospring.adapter.exrate;
 import tobyspring.hellospring.adapter.exrate.vo.ExRate;
 import tobyspring.hellospring.domain.payment.ExRateProvider;
 
-import java.io.IOException;
-
 public class CachedExRateProvider implements ExRateProvider {
     private final ExRateProvider exRateProvider;
     private ExRate cache;
@@ -14,7 +12,7 @@ public class CachedExRateProvider implements ExRateProvider {
     }
 
     @Override
-    public ExRate getExRate(String currency) throws IOException {
+    public ExRate getExRate(String currency) {
         if (cache != null && cache.isValid()) {
             System.out.println("Cache is used.");
             return cache;

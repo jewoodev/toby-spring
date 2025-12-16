@@ -21,7 +21,7 @@ class PaymentServiceTest {
     }
 
     @Test
-    void checkPayments() throws IOException {
+    void checkPayments() {
         LocalDateTime validUntil = LocalDateTime.now(this.clock).plusDays(1);
         ExRate exRate1 = new ExRate(BigDecimal.valueOf(1500), validUntil);
         ExRate exRate2 = new ExRate(BigDecimal.valueOf(1000), validUntil);
@@ -32,7 +32,7 @@ class PaymentServiceTest {
         checkPayment(exRate3, BigDecimal.valueOf(30_000));
     }
 
-    private void checkPayment(ExRate exRate, BigDecimal convertedAmount) throws IOException {
+    private void checkPayment(ExRate exRate, BigDecimal convertedAmount) {
         var paymentService = new PaymentService(
                 new SimpleExRateProviderStub(exRate), this.clock
         );
@@ -50,7 +50,7 @@ class PaymentServiceTest {
     }
 
     @Test
-    void validUntil() throws IOException {
+    void validUntil() {
         LocalDateTime validUntil = LocalDateTime.now(this.clock).plusDays(1);
         ExRate exRate = new ExRate(BigDecimal.valueOf(1500), validUntil);
         var paymentService = new PaymentService(

@@ -3,7 +3,6 @@ package tobyspring.hellospring.domain.payment;
 import tobyspring.hellospring.adapter.exrate.vo.ExRate;
 import tobyspring.hellospring.domain.payment.vo.PaymentDecimal;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -27,7 +26,7 @@ public class Payment {
     }
 
     public static Payment createPrepared(Long orderId, String currency, BigDecimal foreignCurrencyAmount,
-                                         ExRateProvider exRateProvider) throws IOException {
+                                         ExRateProvider exRateProvider) {
         ExRate exRate = exRateProvider.getExRate(currency);
         BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate.value());
         LocalDateTime validUntil = exRate.nextUpdateAt().minusSeconds(1);

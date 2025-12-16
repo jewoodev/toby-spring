@@ -31,7 +31,7 @@ class PaymentServiceSpringTest {
     private Clock clock;
 
     @Test
-    void checkPayments() throws IOException {
+    void checkPayments() {
         LocalDateTime now = LocalDateTime.now();
 
         var exRate1 = new ExRate(BigDecimal.valueOf(1500), now.plusDays(1));
@@ -46,7 +46,7 @@ class PaymentServiceSpringTest {
         checkPayment(BigDecimal.valueOf(30_000));
     }
 
-    private void checkPayment(BigDecimal convertedAmount) throws IOException {
+    private void checkPayment(BigDecimal convertedAmount) {
         Payment payment = paymentService.prepare(1000L, "USD", BigDecimal.TEN);
         ExRate exRate = exRateProvider.getExRate();
 
@@ -61,7 +61,7 @@ class PaymentServiceSpringTest {
     }
 
     @Test
-    void validUntil() throws IOException {
+    void validUntil() {
         LocalDateTime validUntil = LocalDateTime.now(this.clock).plusDays(1);
         ExRate exRate = new ExRate(BigDecimal.valueOf(1500), validUntil);
         var paymentService = new PaymentService(
