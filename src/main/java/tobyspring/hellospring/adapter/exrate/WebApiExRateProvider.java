@@ -2,6 +2,7 @@ package tobyspring.hellospring.adapter.exrate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.NonNull;
 import tobyspring.hellospring.adapter.exrate.dto.ExRateData;
 import tobyspring.hellospring.adapter.exrate.vo.ExRate;
 import tobyspring.hellospring.domain.payment.ExRateProvider;
@@ -32,18 +33,14 @@ public class WebApiExRateProvider implements ExRateProvider {
 
         String response;
         try {
-            var con = (HttpURLConnection) uri.toURL().openConnection();
-            try (var br = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
-                response = br.lines().collect(Collectors.joining());
-            }
+            response = executeApi(uri);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         ExRateData exRateData;
         try {
-            var om = new ObjectMapper();
-            exRateData = om.readValue(response, ExRateData.class);
+            exRateData = parseExRate(response);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -54,5 +51,23 @@ public class WebApiExRateProvider implements ExRateProvider {
         LocalDateTime nextUpdateAt = LocalDateTime.ofInstant(nextUpdate, ZoneId.of("Asia/Seoul"));
 
         return new ExRate(krwRate, nextUpdateAt);
+    }
+
+    private static @NonNull String executeApi(URI uri) throws IOException {
+        var con = (HttpURLConnection) uri.toURL().openConnection();
+
+        String response;
+        try (var br = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+            response = br.lines().collect(Collectors.joining());
+        }
+
+        return response;
+    }
+
+    private static ExRateData parseExRate(String response) throws JsonProcessingException {
+        var om = new ObjectMapper();
+        ExRateData exRateData = om.readValue(response, ExRateData.class);
+
+        return exRateData;
     }
 }
