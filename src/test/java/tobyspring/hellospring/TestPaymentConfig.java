@@ -29,9 +29,7 @@ public class TestPaymentConfig {
 
     @Bean
     public CachedExRateProviderStub cachedExRateProvider() {
-        return new CachedExRateProviderStub(
-                LocalDateTime.now(clock()).plusDays(1)
-        );
+        return new CachedExRateProviderStub();
     }
 
     @Bean

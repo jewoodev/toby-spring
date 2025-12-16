@@ -28,6 +28,7 @@ class CachedExRateProviderTest {
 
     @Test
     public void useCache() throws InterruptedException {
+        exRateProvider.setExRate(new ExRate(BigDecimal.valueOf(1500), LocalDateTime.now(this.clock).plusDays(1)));
         exRateProvider.getExRate("USD");
         TimeUnit.SECONDS.sleep(1);
         assertThat(exRateProvider.getExRate("USD")).isTrue();

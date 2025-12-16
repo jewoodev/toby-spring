@@ -5,6 +5,6 @@ import java.time.LocalDateTime;
 
 public record ExRate(BigDecimal value, LocalDateTime nextUpdateAt) {
     public boolean isValid() {
-        return this != null && this.nextUpdateAt.isAfter(LocalDateTime.now());
+        return this.nextUpdateAt.isAfter(LocalDateTime.now());
     }
 }

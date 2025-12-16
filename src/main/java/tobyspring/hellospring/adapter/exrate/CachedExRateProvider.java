@@ -15,7 +15,7 @@ public class CachedExRateProvider implements ExRateProvider {
 
     @Override
     public ExRate getExRate(String currency) throws IOException {
-        if (cache.isValid()) {
+        if (cache != null && cache.isValid()) {
             System.out.println("Cache is used.");
             return cache;
         }
