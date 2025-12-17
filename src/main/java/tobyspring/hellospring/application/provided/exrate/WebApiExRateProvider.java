@@ -3,7 +3,8 @@ package tobyspring.hellospring.application.provided.exrate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
-import tobyspring.hellospring.adapter.ApiExecuter;
+import tobyspring.hellospring.adapter.ApiExecutor;
+import tobyspring.hellospring.adapter.SimpleApiExecutor;
 import tobyspring.hellospring.application.provided.exrate.dto.ExRateData;
 import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
 import tobyspring.hellospring.domain.payment.ExRateProvider;
@@ -16,20 +17,14 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 public class WebApiExRateProvider implements ExRateProvider {
-    private final ApiExecuter apiExecuter;
-
-    public WebApiExRateProvider(ApiExecuter apiExecuter) {
-        this.apiExecuter = apiExecuter;
-    }
-
     @Override
     public ExRate getExRate(String currency) {
         String url = "https://open.er-api.com/v6/latest/" + currency;
 
-        return runApiForExRate(url);
+        return runApiForExRate(url, new SimpleApiExecutor());
     }
 
-    private @NonNull ExRate runApiForExRate(String url) {
+    private @NonNull ExRate runApiForExRate(String url, ApiExecutor apiExecutor) {
         URI uri;
         try {
             uri = new URI(url);
@@ -37,7 +32,7 @@ public class WebApiExRateProvider implements ExRateProvider {
             throw new RuntimeException(e);
         }
 
-        String response = apiExecuter.execute(uri);
+        String response = apiExecutor.execute(uri);
 
         ExRateData exRateData;
         try {

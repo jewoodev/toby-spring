@@ -7,7 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.stream.Collectors;
 
-public class SimpleApiExecuter implements ApiExecuter {
+public class SimpleApiExecutor implements ApiExecutor {
     @Override
     public String execute(URI uri) {
         HttpURLConnection con = null;

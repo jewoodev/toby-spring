@@ -2,8 +2,8 @@ package tobyspring.hellospring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tobyspring.hellospring.adapter.ApiExecuter;
-import tobyspring.hellospring.adapter.SimpleApiExecuter;
+import tobyspring.hellospring.adapter.ApiExecutor;
+import tobyspring.hellospring.adapter.SimpleApiExecutor;
 import tobyspring.hellospring.application.provided.exrate.CachedExRateProvider;
 import tobyspring.hellospring.domain.payment.ExRateProvider;
 import tobyspring.hellospring.application.provided.exrate.WebApiExRateProvider;
@@ -27,7 +27,7 @@ public class PaymentConfig {
 
     @Bean
     public ExRateProvider exRateProvider() {
-        return new WebApiExRateProvider(apiExecuter());
+        return new WebApiExRateProvider();
     }
 
     @Bean
@@ -36,7 +36,7 @@ public class PaymentConfig {
     }
 
     @Bean
-    public ApiExecuter apiExecuter() {
-        return new SimpleApiExecuter();
+    public ApiExecutor apiExecuter() {
+        return new SimpleApiExecutor();
     }
 }

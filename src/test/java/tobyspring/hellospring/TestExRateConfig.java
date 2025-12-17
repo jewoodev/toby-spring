@@ -2,7 +2,6 @@ package tobyspring.hellospring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tobyspring.hellospring.adapter.SimpleApiExecuter;
 import tobyspring.hellospring.application.provided.exrate.WebApiExRateProvider;
 import tobyspring.hellospring.application.provided.exrate.stub.CachedExRateProviderStub;
 
@@ -24,11 +23,7 @@ public class TestExRateConfig {
 
     @Bean
     public WebApiExRateProvider webApiExRateProvider() {
-        return new WebApiExRateProvider(simpleApiExecuter());
+        return new WebApiExRateProvider();
     }
 
-    @Bean
-    public SimpleApiExecuter simpleApiExecuter() {
-        return new SimpleApiExecuter();
-    }
 }
