@@ -1,11 +1,11 @@
 package tobyspring.hellospring.application.provided.exrate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import tobyspring.hellospring.adapter.ApiExecutor;
+import tobyspring.hellospring.adapter.ExRateExtractor;
+import tobyspring.hellospring.adapter.ErApiExRateExtractor;
 import tobyspring.hellospring.adapter.SimpleApiExecutor;
-import tobyspring.hellospring.application.provided.exrate.dto.ExRateData;
+import tobyspring.hellospring.application.provided.exrate.dto.ErExRateData;
 import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
 import tobyspring.hellospring.domain.payment.ExRateProvider;
 
@@ -21,10 +21,10 @@ public class WebApiExRateProvider implements ExRateProvider {
     public ExRate getExRate(String currency) {
         String url = "https://open.er-api.com/v6/latest/" + currency;
 
-        return runApiForExRate(url, new SimpleApiExecutor());
+        return runApiForExRate(url, new SimpleApiExecutor(), new ErApiExRateExtractor());
     }
 
-    private @NonNull ExRate runApiForExRate(String url, ApiExecutor apiExecutor) {
+    private @NonNull ExRate runApiForExRate(String url, ApiExecutor apiExecutor, ExRateExtractor exRateExtractor) {
         URI uri;
         try {
             uri = new URI(url);
@@ -34,25 +34,12 @@ public class WebApiExRateProvider implements ExRateProvider {
 
         String response = apiExecutor.execute(uri);
 
-        ExRateData exRateData;
-        try {
-            exRateData = extractExRate(response);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        ErExRateData erExRateData = exRateExtractor.extract(response);
 
-
-        BigDecimal krwRate = exRateData.rates().get("KRW");
-        Instant nextUpdate = Instant.ofEpochSecond(exRateData.time_next_update_unix());
+        BigDecimal krwRate = erExRateData.rates().get("KRW");
+        Instant nextUpdate = Instant.ofEpochSecond(erExRateData.time_next_update_unix());
         LocalDateTime nextUpdateAt = LocalDateTime.ofInstant(nextUpdate, ZoneId.of("Asia/Seoul"));
 
         return new ExRate(krwRate, nextUpdateAt);
-    }
-
-    private ExRateData extractExRate(String response) throws JsonProcessingException {
-        var om = new ObjectMapper();
-        ExRateData exRateData = om.readValue(response, ExRateData.class);
-
-        return exRateData;
     }
 }
