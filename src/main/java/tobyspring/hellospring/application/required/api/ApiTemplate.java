@@ -1,5 +1,7 @@
 package tobyspring.hellospring.application.required.api;
 
+import tobyspring.hellospring.adapter.ErApiExRateExtractor;
+import tobyspring.hellospring.adapter.HttpClientApiExecutor;
 import tobyspring.hellospring.application.provided.exrate.dto.ErExRateData;
 import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
 
@@ -11,7 +13,32 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 public class ApiTemplate {
-    public ExRate getExRate(String url, ApiExecutor apiExecutor, ExRateExtractor exRateExtractor) {
+    private final ApiExecutor apiExecutor;
+    private final ExRateExtractor exRateExtractor;
+
+    public ApiTemplate(ApiExecutor apiExecutor, ExRateExtractor exRateExtractor) {
+        this.apiExecutor = apiExecutor;
+        this.exRateExtractor = exRateExtractor;
+    }
+
+    public ApiTemplate() {
+        this.apiExecutor = new HttpClientApiExecutor();
+        this.exRateExtractor = new ErApiExRateExtractor();
+    }
+
+    public ExRate getForExRate(String url) {
+        return this.getForExRate(url, this.apiExecutor, this.exRateExtractor);
+    }
+
+    public ExRate getForExRate(String url, ApiExecutor apiExecutor) {
+        return this.getForExRate(url, apiExecutor, this.exRateExtractor);
+    }
+
+    public ExRate getForExRate(String url, ExRateExtractor exRateExtractor) {
+        return this.getForExRate(url, this.apiExecutor, exRateExtractor);
+    }
+
+    public ExRate getForExRate(String url, ApiExecutor apiExecutor, ExRateExtractor exRateExtractor) {
         URI uri;
         try {
             uri = new URI(url);
