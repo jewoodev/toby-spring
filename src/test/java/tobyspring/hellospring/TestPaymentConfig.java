@@ -2,7 +2,6 @@ package tobyspring.hellospring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tobyspring.hellospring.application.provided.exrate.stub.CachedExRateProviderStub;
 import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
 import tobyspring.hellospring.application.PaymentService;
 import tobyspring.hellospring.application.provided.exrate.stub.SimpleExRateProviderStub;
@@ -17,19 +16,14 @@ import java.time.ZoneId;
 public class TestPaymentConfig {
     @Bean
     public PaymentService paymentService() {
-        return new PaymentService(exRateProvider(), clock());
+        return new PaymentService(simpleExRateProvider(), clock());
     }
 
     @Bean
-    public SimpleExRateProviderStub exRateProvider() {
+    public SimpleExRateProviderStub simpleExRateProvider() {
         return new SimpleExRateProviderStub(
                 new ExRate(BigDecimal.valueOf(1000), LocalDateTime.now(clock()).plusDays(1))
         );
-    }
-
-    @Bean
-    public CachedExRateProviderStub cachedExRateProvider() {
-        return new CachedExRateProviderStub();
     }
 
     @Bean

@@ -3,23 +3,25 @@ package tobyspring.hellospring.application.provided.exrate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
+import tobyspring.hellospring.adapter.ApiExecuter;
 import tobyspring.hellospring.application.provided.exrate.dto.ExRateData;
 import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
 import tobyspring.hellospring.domain.payment.ExRateProvider;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.stream.Collectors;
 
 public class WebApiExRateProvider implements ExRateProvider {
+    private final ApiExecuter apiExecuter;
+
+    public WebApiExRateProvider(ApiExecuter apiExecuter) {
+        this.apiExecuter = apiExecuter;
+    }
+
     @Override
     public ExRate getExRate(String currency) {
         String url = "https://open.er-api.com/v6/latest/" + currency;
@@ -27,7 +29,7 @@ public class WebApiExRateProvider implements ExRateProvider {
         return runApiForExRate(url);
     }
 
-    private static @NonNull ExRate runApiForExRate(String url) {
+    private @NonNull ExRate runApiForExRate(String url) {
         URI uri;
         try {
             uri = new URI(url);
@@ -35,12 +37,7 @@ public class WebApiExRateProvider implements ExRateProvider {
             throw new RuntimeException(e);
         }
 
-        String response;
-        try {
-            response = executeApi(uri);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        String response = apiExecuter.execute(uri);
 
         ExRateData exRateData;
         try {
@@ -57,18 +54,7 @@ public class WebApiExRateProvider implements ExRateProvider {
         return new ExRate(krwRate, nextUpdateAt);
     }
 
-    private static @NonNull String executeApi(URI uri) throws IOException {
-        var con = (HttpURLConnection) uri.toURL().openConnection();
-
-        String response;
-        try (var br = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
-            response = br.lines().collect(Collectors.joining());
-        }
-
-        return response;
-    }
-
-    private static ExRateData extractExRate(String response) throws JsonProcessingException {
+    private ExRateData extractExRate(String response) throws JsonProcessingException {
         var om = new ObjectMapper();
         ExRateData exRateData = om.readValue(response, ExRateData.class);
 

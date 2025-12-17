@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import tobyspring.hellospring.TestPaymentConfig;
+import tobyspring.hellospring.TestExRateConfig;
 import tobyspring.hellospring.application.provided.exrate.stub.CachedExRateProviderStub;
 import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
 
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {TestPaymentConfig.class})
+@ContextConfiguration(classes = {TestExRateConfig.class})
 class CachedExRateProviderTest {
 
     @Autowired
