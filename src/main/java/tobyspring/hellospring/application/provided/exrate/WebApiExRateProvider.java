@@ -1,10 +1,10 @@
-package tobyspring.hellospring.adapter.exrate;
+package tobyspring.hellospring.application.provided.exrate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
-import tobyspring.hellospring.adapter.exrate.dto.ExRateData;
-import tobyspring.hellospring.adapter.exrate.vo.ExRate;
+import tobyspring.hellospring.application.provided.exrate.dto.ExRateData;
+import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
 import tobyspring.hellospring.domain.payment.ExRateProvider;
 
 import java.io.BufferedReader;
@@ -24,6 +24,10 @@ public class WebApiExRateProvider implements ExRateProvider {
     public ExRate getExRate(String currency) {
         String url = "https://open.er-api.com/v6/latest/" + currency;
 
+        return runApiForExRate(url);
+    }
+
+    private static @NonNull ExRate runApiForExRate(String url) {
         URI uri;
         try {
             uri = new URI(url);
@@ -40,7 +44,7 @@ public class WebApiExRateProvider implements ExRateProvider {
 
         ExRateData exRateData;
         try {
-            exRateData = parseExRate(response);
+            exRateData = extractExRate(response);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -64,7 +68,7 @@ public class WebApiExRateProvider implements ExRateProvider {
         return response;
     }
 
-    private static ExRateData parseExRate(String response) throws JsonProcessingException {
+    private static ExRateData extractExRate(String response) throws JsonProcessingException {
         var om = new ObjectMapper();
         ExRateData exRateData = om.readValue(response, ExRateData.class);
 

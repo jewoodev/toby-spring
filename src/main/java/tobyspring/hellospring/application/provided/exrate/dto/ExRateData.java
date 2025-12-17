@@ -1,4 +1,4 @@
-package tobyspring.hellospring.adapter.exrate.dto;
+package tobyspring.hellospring.application.provided.exrate.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

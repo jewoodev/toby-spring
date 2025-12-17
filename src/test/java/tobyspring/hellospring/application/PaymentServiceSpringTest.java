@@ -7,10 +7,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tobyspring.hellospring.TestPaymentConfig;
 import tobyspring.hellospring.domain.payment.Payment;
-import tobyspring.hellospring.adapter.exrate.vo.ExRate;
-import tobyspring.hellospring.adapter.exrate.stub.SimpleExRateProviderStub;
+import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
+import tobyspring.hellospring.application.provided.exrate.stub.SimpleExRateProviderStub;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.LocalDateTime;

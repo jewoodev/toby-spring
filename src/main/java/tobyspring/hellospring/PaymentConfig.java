@@ -2,9 +2,9 @@ package tobyspring.hellospring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tobyspring.hellospring.adapter.exrate.CachedExRateProvider;
+import tobyspring.hellospring.application.provided.exrate.CachedExRateProvider;
 import tobyspring.hellospring.domain.payment.ExRateProvider;
-import tobyspring.hellospring.adapter.exrate.WebApiExRateProvider;
+import tobyspring.hellospring.application.provided.exrate.WebApiExRateProvider;
 import tobyspring.hellospring.application.PaymentService;
 
 import java.time.Clock;

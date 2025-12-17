@@ -2,10 +2,10 @@ package tobyspring.hellospring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tobyspring.hellospring.adapter.exrate.stub.CachedExRateProviderStub;
-import tobyspring.hellospring.adapter.exrate.vo.ExRate;
+import tobyspring.hellospring.application.provided.exrate.stub.CachedExRateProviderStub;
+import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
 import tobyspring.hellospring.application.PaymentService;
-import tobyspring.hellospring.adapter.exrate.stub.SimpleExRateProviderStub;
+import tobyspring.hellospring.application.provided.exrate.stub.SimpleExRateProviderStub;
 
 import java.math.BigDecimal;
 import java.time.Clock;

@@ -1,9 +1,6 @@
-package tobyspring.hellospring.adapter.exrate.stub;
+package tobyspring.hellospring.application.provided.exrate.stub;
 
-import tobyspring.hellospring.adapter.exrate.vo.ExRate;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
 
 public class CachedExRateProviderStub {
     private ExRate cache;

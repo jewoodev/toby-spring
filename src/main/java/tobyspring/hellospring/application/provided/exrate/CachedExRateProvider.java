@@ -1,6 +1,6 @@
-package tobyspring.hellospring.adapter.exrate;
+package tobyspring.hellospring.application.provided.exrate;
 
-import tobyspring.hellospring.adapter.exrate.vo.ExRate;
+import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
 import tobyspring.hellospring.domain.payment.ExRateProvider;
 
 public class CachedExRateProvider implements ExRateProvider {
