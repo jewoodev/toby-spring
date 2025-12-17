@@ -8,7 +8,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tobyspring.hellospring.TestExRateConfig;
 import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
 
-import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.LocalDateTime;
 
