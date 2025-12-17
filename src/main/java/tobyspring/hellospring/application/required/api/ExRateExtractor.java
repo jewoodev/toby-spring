@@ -1,4 +1,4 @@
-package tobyspring.hellospring.adapter;
+package tobyspring.hellospring.application.required.api;
 
 import tobyspring.hellospring.application.provided.exrate.dto.ErExRateData;
 

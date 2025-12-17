@@ -3,6 +3,7 @@ package tobyspring.hellospring.adapter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import tobyspring.hellospring.application.provided.exrate.dto.ErExRateData;
+import tobyspring.hellospring.application.required.api.ExRateExtractor;
 
 public class ErApiExRateExtractor implements ExRateExtractor {
     @Override
