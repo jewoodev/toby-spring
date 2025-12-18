@@ -1,32 +1,27 @@
 package tobyspring.hellospring;
 
-import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import tobyspring.hellospring.application.required.order.OrderRepository;
 import tobyspring.hellospring.domain.order.Order;
 
 import java.math.BigDecimal;
 
 public class DataClient {
+    private final OrderRepository orderRepository;
+
+    public DataClient(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
+
     public static void main(String[] args)  {
         BeanFactory beanFactory = new AnnotationConfigApplicationContext(DataConfig.class);
-        var emf = beanFactory.getBean(EntityManagerFactory.class);
-
-        var em = emf.createEntityManager();
-
-        em.getTransaction().begin();
+        var orderRepository = beanFactory.getBean(OrderRepository.class);
 
         var order = new Order("100", BigDecimal.TEN);
-        System.out.println(order);
+        orderRepository.save(order);
 
-        em.persist(order);
-
-//        var dpcOrdName = new Order("100", BigDecimal.TEN);
-//        em.persist(dpcOrdName);
-
-        System.out.println(order);
-
-        em.getTransaction().commit();
-        em.close();
+        var dupNameOrder = new Order("100", BigDecimal.ONE);
+        orderRepository.save(dupNameOrder);
     }
 }
