@@ -1,6 +1,6 @@
 package tobyspring.hellospring.domain.payment;
 
-import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
+import tobyspring.hellospring.domain.payment.vo.ExRate;
 
 public interface ExRateProvider {
     ExRate getExRate(String currency);

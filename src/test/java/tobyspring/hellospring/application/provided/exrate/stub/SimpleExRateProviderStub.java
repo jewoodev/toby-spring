@@ -1,6 +1,6 @@
 package tobyspring.hellospring.application.provided.exrate.stub;
 
-import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
+import tobyspring.hellospring.domain.payment.vo.ExRate;
 import tobyspring.hellospring.domain.payment.ExRateProvider;
 
 public class SimpleExRateProviderStub implements ExRateProvider {

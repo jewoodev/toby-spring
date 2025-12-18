@@ -5,9 +5,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import tobyspring.hellospring.TestPaymentConfig;
 import tobyspring.hellospring.domain.payment.Payment;
-import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
+import tobyspring.hellospring.domain.payment.vo.ExRate;
+import tobyspring.hellospring.TestPaymentConfig;
 import tobyspring.hellospring.application.provided.exrate.stub.SimpleExRateProviderStub;
 
 import java.math.BigDecimal;

@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tobyspring.hellospring.TestExRateConfig;
 import tobyspring.hellospring.application.provided.exrate.stub.CachedExRateProviderStub;
-import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
+import tobyspring.hellospring.domain.payment.vo.ExRate;
 
 import java.math.BigDecimal;
 import java.time.Clock;
@@ -27,7 +27,7 @@ class CachedExRateProviderTest {
     private Clock clock;
 
     @Test
-    public void useCache() throws InterruptedException {
+    void useCache() throws InterruptedException {
         exRateProvider.setExRate(new ExRate(BigDecimal.valueOf(1500), LocalDateTime.now(this.clock).plusDays(1)));
         exRateProvider.getExRate("USD");
         TimeUnit.SECONDS.sleep(1);
@@ -35,7 +35,7 @@ class CachedExRateProviderTest {
     }
 
     @Test
-    public void canNotUseCache() {
+    void canNotUseCache() {
         ExRate exRate = new ExRate(BigDecimal.valueOf(1500), LocalDateTime.now(this.clock));
         exRateProvider.setExRate(exRate);
         assertThat(exRateProvider.getExRate("USD")).isFalse();

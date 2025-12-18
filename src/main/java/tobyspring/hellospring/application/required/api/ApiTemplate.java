@@ -3,7 +3,7 @@ package tobyspring.hellospring.application.required.api;
 import tobyspring.hellospring.adapter.ErApiExRateExtractor;
 import tobyspring.hellospring.adapter.HttpClientApiExecutor;
 import tobyspring.hellospring.application.provided.exrate.dto.ErExRateData;
-import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
+import tobyspring.hellospring.domain.payment.vo.ExRate;
 
 import java.math.BigDecimal;
 import java.net.URI;

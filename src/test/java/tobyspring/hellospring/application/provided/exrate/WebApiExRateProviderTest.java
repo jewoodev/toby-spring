@@ -5,8 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import tobyspring.hellospring.domain.payment.vo.ExRate;
 import tobyspring.hellospring.TestExRateConfig;
-import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
 
 import java.time.Clock;
 import java.time.LocalDateTime;

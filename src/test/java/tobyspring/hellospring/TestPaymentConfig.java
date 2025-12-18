@@ -2,7 +2,7 @@ package tobyspring.hellospring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
+import tobyspring.hellospring.domain.payment.vo.ExRate;
 import tobyspring.hellospring.application.PaymentService;
 import tobyspring.hellospring.application.provided.exrate.stub.SimpleExRateProviderStub;
 

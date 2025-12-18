@@ -3,7 +3,7 @@ package tobyspring.hellospring.application;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tobyspring.hellospring.domain.payment.Payment;
-import tobyspring.hellospring.application.provided.exrate.vo.ExRate;
+import tobyspring.hellospring.domain.payment.vo.ExRate;
 import tobyspring.hellospring.application.provided.exrate.stub.SimpleExRateProviderStub;
 
 import java.math.BigDecimal;
