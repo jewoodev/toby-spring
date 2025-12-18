@@ -4,13 +4,11 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
-import static jakarta.persistence.GenerationType.*;
-
 @Entity
 @Table(name = "orders", indexes = @Index(name = "UK_orderName", columnList = "orderName", unique = true))
 public class Order {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue
     private Long orderId;
 
     private String orderName;
