@@ -5,6 +5,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
+import tobyspring.hellospring.adapter.out.config.PersistenceConfig;
 import tobyspring.hellospring.application.required.order.OrderRepository;
 import tobyspring.hellospring.domain.order.Order;
 
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 
 public class DataClient {
     public static void main(String[] args)  {
-        BeanFactory beanFactory = new AnnotationConfigApplicationContext(DataConfig.class);
+        BeanFactory beanFactory = new AnnotationConfigApplicationContext(PersistenceConfig.class);
         var orderRepository = beanFactory.getBean(OrderRepository.class);
         var transactionManager = beanFactory.getBean(JpaTransactionManager.class);
 

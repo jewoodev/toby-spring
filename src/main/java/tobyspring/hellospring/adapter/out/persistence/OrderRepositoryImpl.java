@@ -1,0 +1,16 @@
+package tobyspring.hellospring.adapter.out.persistence;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import tobyspring.hellospring.application.required.order.OrderRepository;
+import tobyspring.hellospring.domain.order.Order;
+
+public class OrderRepositoryImpl implements OrderRepository {
+    @PersistenceContext
+    private EntityManager em;
+
+    @Override
+    public void save(Order order) {
+        em.persist(order);
+    }
+}

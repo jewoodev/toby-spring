@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tobyspring.hellospring.domain.payment.vo.ExRate;
-import tobyspring.hellospring.TestPaymentConfig;
-import tobyspring.hellospring.application.provided.exrate.stub.SimpleExRateProviderStub;
+import tobyspring.hellospring.application.TestApplicationConfig;
+import tobyspring.hellospring.adapter.out.external.exrate.stub.SimpleExRateProviderStub;
 
 import java.math.BigDecimal;
 import java.time.*;
@@ -15,7 +15,7 @@ import java.time.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {TestPaymentConfig.class})
+@ContextConfiguration(classes = {TestApplicationConfig.class})
 class PaymentTest {
     @Autowired
     private Clock clock;
