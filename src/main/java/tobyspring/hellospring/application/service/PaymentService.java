@@ -4,12 +4,11 @@ import tobyspring.hellospring.domain.payment.ExRateProvider;
 import tobyspring.hellospring.domain.payment.Payment;
 
 import java.math.BigDecimal;
-import java.time.Clock;
 
 public class PaymentService {
     private final ExRateProvider exRateProvider;
 
-    public PaymentService(ExRateProvider exRateProvider, Clock clock) {
+    public PaymentService(ExRateProvider exRateProvider) {
         this.exRateProvider = exRateProvider;
     }
 

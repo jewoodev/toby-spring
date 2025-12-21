@@ -16,7 +16,7 @@ import java.time.ZoneId;
 public class TestApplicationConfig {
     @Bean
     public PaymentService paymentService() {
-        return new PaymentService(simpleExRateProvider(), clock());
+        return new PaymentService(simpleExRateProvider());
     }
 
     @Bean

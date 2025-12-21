@@ -63,9 +63,7 @@ class PaymentServiceSpringTest {
     void validUntil() {
         LocalDateTime validUntil = LocalDateTime.now(this.clock).plusDays(1);
         ExRate exRate = new ExRate(BigDecimal.valueOf(1500), validUntil);
-        var paymentService = new PaymentService(
-                new SimpleExRateProviderStub(exRate), this.clock
-        );
+        var paymentService = new PaymentService(new SimpleExRateProviderStub(exRate));
 
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
 
