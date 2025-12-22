@@ -1,9 +1,11 @@
 package tobyspring.hellospring.domain.order;
 
 import jakarta.persistence.*;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
+@Setter
 @Entity
 @Table(name = "orders", indexes = @Index(name = "UK_orderName", columnList = "orderName", unique = true))
 public class Order {
@@ -42,5 +44,9 @@ public class Order {
                 ", orderName='" + orderName + '\'' +
                 ", totalAmount=" + totalAmount +
                 '}';
+    }
+
+    public void beforePersist(Long orderId) {
+        this.orderId = orderId;
     }
 }

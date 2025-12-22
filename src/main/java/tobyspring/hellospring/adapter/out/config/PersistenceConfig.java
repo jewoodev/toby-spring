@@ -1,22 +1,15 @@
 package tobyspring.hellospring.adapter.out.config;
 
-import jakarta.persistence.EntityManagerFactory;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-import tobyspring.hellospring.adapter.out.persistence.JpaOrderRepository;
+import tobyspring.hellospring.adapter.out.persistence.JdbcOrderRepository;
 import tobyspring.hellospring.application.required.order.OrderRepository;
 
 import javax.sql.DataSource;
-
-import static org.springframework.orm.jpa.vendor.Database.H2;
 
 @Configuration
 public class PersistenceConfig {
@@ -27,33 +20,35 @@ public class PersistenceConfig {
                 .build();
     }
 
+    // About JPA
+//    @Bean
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+//        var emf = new LocalContainerEntityManagerFactoryBean();
+//        emf.setDataSource(dataSource());
+//        emf.setPackagesToScan("tobyspring.hellospring.domain");
+//        emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter() {
+//            {
+//                setDatabase(H2);
+//                setGenerateDdl(true);
+//                setShowSql(true);
+//            }
+//        });
+//        return emf;
+//    }
+//
+//    @Bean
+//    public BeanPostProcessor persistenceAnnotationBeanPostProcessor() {
+//        return new PersistenceAnnotationBeanPostProcessor();
+//    }
+    // About JPA is end
+
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        var emf = new LocalContainerEntityManagerFactoryBean();
-        emf.setDataSource(dataSource());
-        emf.setPackagesToScan("tobyspring.hellospring.domain");
-        emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter() {
-            {
-                setDatabase(H2);
-                setGenerateDdl(true);
-                setShowSql(true);
-            }
-        });
-        return emf;
+    public PlatformTransactionManager transactionManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean
-    public BeanPostProcessor persistenceAnnotationBeanPostProcessor() {
-        return new PersistenceAnnotationBeanPostProcessor();
-    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
-        return new JpaTransactionManager(emf);
-    }
-
-    @Bean
-    public OrderRepository orderRepository() {
-        return new JpaOrderRepository();
+    public OrderRepository orderRepository(DataSource dataSource) {
+        return new JdbcOrderRepository(dataSource);
     }
 }

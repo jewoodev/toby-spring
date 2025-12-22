@@ -26,4 +26,8 @@ public class OrderService {
             return order;
         });
     }
+
+    public Order getOrder(Long orderId) {
+        return this.orderRepository.get(orderId);
+    }
 }

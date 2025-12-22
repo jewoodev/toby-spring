@@ -9,10 +9,10 @@ import tobyspring.hellospring.adapter.out.config.PersistenceConfig;
 import tobyspring.hellospring.adapter.out.config.external.ApiConfig;
 import tobyspring.hellospring.adapter.out.config.external.ExRateConfig;
 import tobyspring.hellospring.application.config.ApplicationConfig;
-import tobyspring.hellospring.domain.order.Order;
 
 import java.math.BigDecimal;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -26,9 +26,10 @@ public class OrderServiceSpringTest {
 
     @Test
     void createOrder() {
-        Order order = orderService.createOrder("test", BigDecimal.valueOf(1000));
-        assertNotNull(order);
-        assertEquals(1L , order.getOrderId());
-        assertEquals(BigDecimal.valueOf(1000), order.getTotalAmount());
+        var order = orderService.createOrder("test", BigDecimal.valueOf(1000));
+        var found = orderService.getOrder(order.getOrderId());
+        assertNotNull(found);
+        assertEquals(1L , found.getOrderId());
+        assertThat(order.getTotalAmount()).isEqualByComparingTo(found.getTotalAmount());
     }
 }
