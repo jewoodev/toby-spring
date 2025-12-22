@@ -5,10 +5,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import tobyspring.hellospring.GlobalTestConfig;
+import tobyspring.hellospring.adapter.out.external.exrate.stub.SimpleExRateProviderStub;
+import tobyspring.hellospring.application.config.TestApplicationConfig;
 import tobyspring.hellospring.domain.payment.Payment;
 import tobyspring.hellospring.domain.payment.vo.ExRate;
-import tobyspring.hellospring.application.TestApplicationConfig;
-import tobyspring.hellospring.adapter.out.external.exrate.stub.SimpleExRateProviderStub;
 
 import java.math.BigDecimal;
 import java.time.Clock;
@@ -17,9 +18,8 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {TestApplicationConfig.class})
+@ContextConfiguration(classes = {TestApplicationConfig.class, GlobalTestConfig.class})
 class PaymentServiceSpringTest {
-
     @Autowired
     private PaymentService paymentService;
 
@@ -31,7 +31,7 @@ class PaymentServiceSpringTest {
 
     @Test
     void checkPayments() {
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(this.clock);
 
         var exRate1 = new ExRate(BigDecimal.valueOf(1500), now.plusDays(1));
         var exRate2 = new ExRate(BigDecimal.valueOf(1000), now.plusDays(1));
