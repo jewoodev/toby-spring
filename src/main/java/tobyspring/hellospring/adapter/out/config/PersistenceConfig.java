@@ -10,8 +10,9 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import tobyspring.hellospring.application.required.order.OrderRepository;
+import org.springframework.transaction.PlatformTransactionManager;
 import tobyspring.hellospring.adapter.out.persistence.JpaOrderRepository;
+import tobyspring.hellospring.application.required.order.OrderRepository;
 
 import javax.sql.DataSource;
 
@@ -47,11 +48,11 @@ public class PersistenceConfig {
     }
 
     @Bean
-    public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
     }
 
-    @Bean   
+    @Bean
     public OrderRepository orderRepository() {
         return new JpaOrderRepository();
     }

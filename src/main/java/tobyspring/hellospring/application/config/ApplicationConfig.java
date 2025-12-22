@@ -2,7 +2,7 @@ package tobyspring.hellospring.application.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 import tobyspring.hellospring.application.required.order.OrderRepository;
 import tobyspring.hellospring.application.service.OrderService;
 import tobyspring.hellospring.application.service.PaymentService;
@@ -16,7 +16,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public OrderService orderService(OrderRepository orderRepository, JpaTransactionManager transactionManager) {
+    public OrderService orderService(OrderRepository orderRepository, PlatformTransactionManager transactionManager) {
         return new OrderService(orderRepository, transactionManager);
     }
 }
