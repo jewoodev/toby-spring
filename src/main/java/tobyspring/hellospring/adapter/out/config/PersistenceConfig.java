@@ -11,7 +11,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import tobyspring.hellospring.application.required.order.OrderRepository;
-import tobyspring.hellospring.adapter.out.persistence.OrderRepositoryImpl;
+import tobyspring.hellospring.adapter.out.persistence.JpaOrderRepository;
 
 import javax.sql.DataSource;
 
@@ -51,8 +51,8 @@ public class PersistenceConfig {
         return new JpaTransactionManager(emf);
     }
 
-    @Bean
+    @Bean   
     public OrderRepository orderRepository() {
-        return new OrderRepositoryImpl();
+        return new JpaOrderRepository();
     }
 }

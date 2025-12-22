@@ -5,7 +5,7 @@ import jakarta.persistence.PersistenceContext;
 import tobyspring.hellospring.application.required.order.OrderRepository;
 import tobyspring.hellospring.domain.order.Order;
 
-public class OrderRepositoryImpl implements OrderRepository {
+public class JpaOrderRepository implements OrderRepository {
     @PersistenceContext
     private EntityManager em;
 
