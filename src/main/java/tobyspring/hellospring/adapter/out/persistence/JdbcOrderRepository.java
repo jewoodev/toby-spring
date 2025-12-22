@@ -40,4 +40,8 @@ public class JdbcOrderRepository implements OrderRepository {
                 .query(Order.class)
                 .single();
     }
+
+    public void truncate() {
+        jdbcClient.sql("TRUNCATE TABLE orders").update();
+    }
 }
